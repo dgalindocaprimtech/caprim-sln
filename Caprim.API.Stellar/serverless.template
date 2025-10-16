@@ -1,0 +1,139 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Description": "Caprim API Stellar - AWS Lambda Function",
+
+  "Parameters": {
+    "RdsHost": {
+      "Type": "String",
+      "Description": "RDS PostgreSQL host endpoint",
+      "Default": "your-rds-instance.cluster-xxxxx.us-east-1.rds.amazonaws.com"
+    },
+    "RdsDatabase": {
+      "Type": "String",
+      "Description": "RDS PostgreSQL database name",
+      "Default": "caprimdb"
+    },
+    "RdsUsername": {
+      "Type": "String",
+      "Description": "RDS PostgreSQL username",
+      "Default": "caprimuser"
+    },
+    "RdsPassword": {
+      "Type": "String",
+      "Description": "RDS PostgreSQL password",
+      "NoEcho": true,
+      "MinLength": 8,
+      "MaxLength": 128
+    },
+    "Environment": {
+      "Type": "String",
+      "Description": "Deployment environment",
+      "Default": "prod",
+      "AllowedValues": ["dev", "staging", "prod"]
+    }
+  },
+
+  "Globals": {
+    "Function": {
+      "Timeout": 60,
+      "MemorySize": 1024,
+      "Environment": {
+        "Variables": {
+          "ASPNETCORE_ENVIRONMENT": "Production",
+          "ConnectionStrings__DefaultConnection": {
+            "Fn::Sub": "Host=${RdsHost};Database=${RdsDatabase};Username=${RdsUsername};Password=${RdsPassword};SearchPath=CaprimApp;SSL Mode=Require;Trust Server Certificate=true;"
+          },
+          "Cognito__Region": "us-east-1",
+          "Cognito__UserPoolId": "us-east-1_lvRYtEIyu",
+          "Cognito__ClientId": "20hlo41tc8dgbfshpil3ps3lc2",
+          "Stellar__Environment": "PROD",
+          "Stellar__HorizonUrl": "https://horizon.stellar.org",
+          "Stellar__HorizonUrlDev": "https://horizon-testnet.stellar.org"
+        }
+      }
+    },
+    "Api": {
+      "Cors": {
+        "AllowMethods": "'GET,POST,PUT,DELETE,OPTIONS'",
+        "AllowHeaders": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+        "AllowOrigin": "'*'"
+      }
+    }
+  },
+
+  "Resources": {
+    "CaprimApiStellarFunction": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "FunctionName": {
+          "Fn::Sub": "caprim-api-stellar-${Environment}"
+        },
+        "Runtime": "dotnet8",
+        "Handler": "Caprim.API.Stellar::Caprim.API.Stellar.LambdaEntryPoint::FunctionHandlerAsync",
+        "CodeUri": "./",
+        "Events": {
+          "ApiGatewayEvent": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/{proxy+}",
+              "Method": "ANY"
+            }
+          }
+        },
+        "Policies": [
+          "AWSLambdaBasicExecutionRole",
+          "AWSLambdaVPCAccessExecutionRole",
+          {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "logs:CreateLogGroup",
+                  "logs:CreateLogStream",
+                  "logs:PutLogEvents"
+                ],
+                "Resource": "arn:aws:logs:*:*:*"
+              },
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "rds-db:connect"
+                ],
+                "Resource": {
+                  "Fn::Sub": "arn:aws:rds-db:*:*:dbuser:*/${RdsUsername}"
+                }
+              },
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "ssm:GetParameter",
+                  "ssm:GetParameters",
+                  "ssm:GetParametersByPath"
+                ],
+                "Resource": "arn:aws:ssm:*:*:parameter/caprim/*"
+              },
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "secretsmanager:GetSecretValue"
+                ],
+                "Resource": "arn:aws:secretsmanager:*:*:secret:caprim/*"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+
+  "Outputs": {
+    "ApiGatewayUrl": {
+      "Description": "API Gateway endpoint URL for the function",
+      "Value": {
+        "Fn::Sub": "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "resource": "/{proxy+}",
+  "path": "/api/values",
+  "httpMethod": "GET",
+  "headers": {
+    "Authorization": "Bearer eyJraWQiOiJCMmxRVUZORGN2NGJvQkZLZk5oK0tnU3NaUzBQRm9vUzlHT0ZUNmF0SE1jPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJmNGI4ZDQ2OC0xMDQxLTcwZmEtYzZlZi0zNDA1YTQ2ZDdkNDYiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfbHZSWXRFSXl1IiwiY29nbml0bzp1c2VybmFtZSI6ImY0YjhkNDY4LTEwNDEtNzBmYS1jNmVmLTM0MDVhNDZkN2Q0NiIsIm9yaWdpbl9qdGkiOiJmYjQ5Y2ZmMC00ZmQ5LTQ2NGMtYmYzMy0yMzVmZDEzNGYzZDIiLCJhdWQiOiIyMGhsbzQxdGM4ZGdiZnNocGlsM3BzM2xjMiIsImV2ZW50X2lkIjoiOTU4OTYwOGEtOWVhOS00MGQ5LTkwNDEtY2NiNzE5ODgxYjNlIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3NTg4MTc2NjgsImV4cCI6MTc1ODgyMTI2OCwiaWF0IjoxNzU4ODE3NjY4LCJqdGkiOiI5MjUwMzZhMi0wYWE1LTQxZmEtYjBiYS0yM2VjMGQ4YzlmODMiLCJlbWFpbCI6ImRnYWxpbmRvQGNhcHJpbXRlY2guY29tIn0.cy8QNVgxY3EfnpO71h2d0KbqCrWusqEBb06C8oQ-Y5vlgGr1Mpem2bj_H6vg6ExWsE7tPD4nGpsrurSnLO6Ml3zvhji996IU5vprcqyUMtrOP9HAtaMptI95VCnsSq3vXklT8fgVBPMYqQEpd8COeIsb4zt3Qt4iiBL0YKEt0YLYHcZDdWZIW7uYESNmiYTJqU0GSa749zUNU7wzo9Wxu4yvR_dSLloyBmZOtwBqjNVKJYkZRSPx59kePbnuKdM-h7goy6CPUEw4reptaKHmKbmskOfP6vdywHVnIP6zHljTcfTIW6_-WU7D4cufkkpfOVQM4QOmiQiw9y7DHa-UrQ"
+  },
+  "queryStringParameters": null,
+  "pathParameters": {
+    "proxy": "api/values"
+  },
+  "stageVariables": null,
+  "requestContext": {
+    "accountId": "AAAAAAAAAAAA",
+    "resourceId": "5agfss",
+    "stage": "test-invoke-stage",
+    "requestId": "test-invoke-request",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "accountId": "AAAAAAAAAAAA",
+      "cognitoIdentityId": null,
+      "caller": "BBBBBBBBBBBB",
+      "apiKey": "test-invoke-api-key",
+      "sourceIp": "test-invoke-source-ip",
+      "cognitoAuthenticationType": null,
+      "cognitoAuthenticationProvider": null,
+      "userArn": "arn:aws:iam::AAAAAAAAAAAA:root",
+      "userAgent": "Apache-HttpClient/4.5.x (Java/1.8.0_102)",
+      "user": "AAAAAAAAAAAA"
+    },
+    "authorizer": {
+      "claims": {
+        "sub": "f4b8d468-1041-70fa-c6ef-3405a46d7d46",
+        "email_verified": "true",
+        "iss": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_lvRYtEIyu",
+        "cognito:username": "f4b8d468-1041-70fa-c6ef-3405a46d7d46",
+        "origin_jti": "fb49cff0-4fd9-464c-bf33-235fde134fd2",
+        "aud": "20hlo41tc8dgbfshpil3ps3lc2",
+        "event_id": "9589608a-9ea9-40d9-9041-ccb719818b3e",
+        "token_use": "id",
+        "auth_time": "1758817668",
+        "exp": "1758821268",
+        "iat": "1758817668",
+        "jti": "925036a2-0aa5-41fa-b0ba-23ec0d8c9f83",
+        "email": "dgalindo@caprimtech.com"
+      }
+    },
+    "resourcePath": "/{proxy+}",
+    "httpMethod": "GET",
+    "apiId": "t2yh6sjnmk"
+  },
+  "body": null
+}

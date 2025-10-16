@@ -1,0 +1,6 @@
+@Caprim.API.Stellar_HostAddress = http://localhost:5237
+
+GET {{Caprim.API.Stellar_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

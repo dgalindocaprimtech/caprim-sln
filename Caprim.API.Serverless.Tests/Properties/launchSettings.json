@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Caprim.API.Serverless.Tests": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:50952;http://localhost:50953"
+    }
+  }
+}

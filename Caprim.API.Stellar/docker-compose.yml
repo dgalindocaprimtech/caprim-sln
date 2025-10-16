@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  caprim-api-stellar:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      # ASP.NET Core
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Production}
+      - ASPNETCORE_URLS=http://+:8080
+
+      # Base de datos PostgreSQL
+      - ConnectionStrings__DefaultConnection=Host=${POSTGRES_HOST};Port=${POSTGRES_PORT:-5432};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};SearchPath=${POSTGRES_SCHEMA}
+
+      # AWS Cognito
+      - Authentication__JwtBearer__Authority=https://cognito-idp.${COGNITO_REGION:-us-east-1}.amazonaws.com/${COGNITO_REGION:-us-east-1}_${COGNITO_USER_POOL_ID}
+      - Authentication__JwtBearer__Audience=${COGNITO_CLIENT_ID}
+
+      # Configuración Stellar
+      - Stellar__Network=${STELLAR_NETWORK:-TESTNET}
+      - Stellar__HorizonUrl=${STELLAR_HORIZON_URL}
+      - Stellar__NetworkPassphrase=${STELLAR_NETWORK_PASSPHRASE}
+
+      # Logging
+      - Logging__LogLevel__Default=Information
+      - Logging__LogLevel__Microsoft=Warning
+      - Logging__LogLevel__Microsoft.Hosting.Lifetime=Information
+
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-caprim_stellar}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Servicio para probar Lambda localmente
+  caprim-api-lambda-local:
+    build:
+      context: .
+      dockerfile: Dockerfile.lambda
+    ports:
+      - "9000:8080"  # Puerto estándar para Lambda local
+    environment:
+      # ASP.NET Core
+      - ASPNETCORE_ENVIRONMENT=Development
+
+      # Base de datos PostgreSQL
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};SearchPath=${POSTGRES_SCHEMA}
+
+      # AWS Cognito
+      - Cognito__Region=${COGNITO_REGION:-us-east-1}
+      - Cognito__UserPoolId=${COGNITO_USER_POOL_ID}
+      - Cognito__ClientId=${COGNITO_CLIENT_ID}
+
+      # Configuración Stellar
+      - Stellar__Environment=${STELLAR_NETWORK:-TESTNET}
+      - Stellar__HorizonUrl=${STELLAR_HORIZON_URL}
+      - Stellar__HorizonUrlDev=${STELLAR_HORIZON_URL}
+
+      # Logging
+      - Logging__LogLevel__Default=Information
+      - Logging__LogLevel__Microsoft=Warning
+
+    profiles:
+      - lambda-local
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:

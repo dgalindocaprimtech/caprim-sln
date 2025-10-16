@@ -1,0 +1,9 @@
+
+{
+    "region" : "us-east-1",
+    "profile" : "cli-diego",
+    "s3-bucket" : "caprimtechs3tesst",
+    "template"  : "serverless.template",
+    "template-parameters" : "\"RdsHost\"=\"your-rds-instance.cluster-xxxxx.us-east-1.rds.amazonaws.com\";\"RdsDatabase\"=\"caprimdb\";\"RdsUsername\"=\"caprimuser\";\"RdsPassword\"=\"acaskiekmgo\";\"Environment\"=\"prod\"",
+    "stack-name"          : "test-lambda-api"
+}

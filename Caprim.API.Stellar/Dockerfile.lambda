@@ -1,0 +1,18 @@
+# Dockerfile para AWS Lambda con .NET 8
+FROM public.ecr.aws/lambda/dotnet:8
+
+# Copiar el archivo .csproj y restaurar dependencias
+COPY ["Caprim.API.Stellar.csproj", "./"]
+RUN dotnet restore "./Caprim.API.Stellar.csproj"
+
+# Copiar el resto del código fuente
+COPY . .
+
+# Build the application
+RUN dotnet build "Caprim.API.Stellar.csproj" -c Release -o /app/build
+
+# Publish the application
+RUN dotnet publish "Caprim.API.Stellar.csproj" -c Release -o /app/publish
+
+# Comando para ejecutar la función Lambda
+CMD ["Caprim.API.Stellar::Caprim.API.Stellar.LambdaEntryPoint::FunctionHandlerAsync"]

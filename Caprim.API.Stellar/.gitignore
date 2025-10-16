@@ -1,0 +1,185 @@
+# Environment variables and sensitive files
+.env
+.env.local
+.env.*.local
+appsettings*.json
+appsettings.*.json
+!appsettings.Example.json
+!appsettings.example.json
+
+# GitHub specific files (user-specific)
+.github/
+
+# AWS SAM and Lambda
+.sam/
+.aws-sam/
+publish/
+*.zip
+
+# Build outputs
+bin/
+obj/
+out/
+*.dll
+*.exe
+*.pdb
+
+# IDE and editors
+.vscode/
+.vs/
+.idea/
+*.swp
+*.swo
+*~
+*.tmp
+*.temp
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and diagnostics
+*.log
+logs/
+*.log.*
+*.diagnostic
+*.diagnostics
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Docker
+.dockerignore
+
+# Node.js (if any)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Rider
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# Temporary files
+*.bak
+*.backup
+*.orig
+*.rej
+
+# Test results
+TestResults/
+*.trx
+*.testsettings
+
+# Coverage reports
+coverage/
+*.coverage
+*.coveragexml
+
+# NuGet
+packages/
+*.nupkg
+
+# JetBrains Rider
+.idea/
+
+# User specific files
+*.user
+*.suo
+*.cache
+*.docstates
+
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# StyleCop
+StyleCopReport.xml
+
+# Files built by Visual Studio
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.log
+*.svclog
+*.scc
+
+# Chutzpah Test files
+_Chutzpah*
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+# TFS
+$tf/
+
+# Git
+.git/
+*.git
+
+# Azure
+.publish/
+*.azurePubxml
